@@ -40,11 +40,11 @@ function bob() {
         break;
 
       case 1: //ID1の文字列が既に格納され関数`bob()`のローカル変数`whatBobSays`を使用する
+        // -->bob()関数内で宣言されているローカル変数？をそのまま出力
+        console.log(whatBobSays);
         break;
 
       case 2: //ID2の文字列が既に格納されたグローバル変数`whatBobSays`を使用する
-        // -->bob()関数内で宣言されているローカル変数？をそのまま出力
-        console.log(whatBobSays);
         break;
 
       case 3: //関数`bob()`の中で関数`whatBobSays`を作成し、その中で宣言したものを利用する
@@ -86,3 +86,4 @@ function setDialog(whatHeSays, talkID) {
     talkID++;
   }
 }
+// setDialog(whatBobSays, talkID);
