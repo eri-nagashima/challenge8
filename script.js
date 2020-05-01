@@ -7,12 +7,16 @@ const LOCAL_FOR = 'ここはfor文のブロックスコープにあるローカ�
 const LOCAL_OBJ = 'オブジェクトで設定したオブジェクトメソッドで連絡中!!'; //ID 5
 
 //吹き出しの番号を指定するID
+// let talkID = 0;
 
 //グローバル変数(定数)
-const whatBobSays = GLOBAL;
+// const whatBobSays = GLOBAL;
+// --> varを使用することでアクセス可能になる
+var whatBobSays = GLOBAL;
 
 //起動時に呼ばれる
 window.onload = function () {
+  let talkID = 0;
   //起動時に呼び出す関数
   bob();
 };
@@ -21,56 +25,50 @@ window.onload = function () {
 function bob() {
   const whatBobSays = LOCAL_BOB;
 
-  //ID3用関数
-  let getBobSaysId3 = function () {
-    const whatBobSays = LOCAL_NEST_FUNCTION;
-    return whatBobSays;
-  };
-
   for (let talkID = 0; talkID <= 5; talkID++) {
-    // const whatBobSays = LOCAL_FOR; //ローカル変数(定数) --> case 4に移動させる
+    const whatBobSays = LOCAL_FOR; //ローカル変数(定数)
 
     switch (talkID) {
-      case 0: //switch文の`case`の中で、ID2の文字列が格納された変数`whatBobSays`を宣言して使用する??
-        // -->新たにブロックを作ってローカル変数を宣言する
+      case 0: //switch文の`case`の中で、ID2の文字列が格納された変数`whatBobSays`を宣言して使用する
         {
-          let whatBobSays = LOCAL_SWITCH;
-          console.log(whatBobSays);
+          const whatBobSays = LOCAL_SWITCH; // 変数である必要はない → 基本定数で宣言
+          setDialog(whatBobSays, talkID);
         }
         break;
 
       case 1: //ID1の文字列が既に格納され関数`bob()`のローカル変数`whatBobSays`を使用する
-        // -->bob()関数内で宣言されているローカル変数？をそのまま出力
-        console.log(whatBobSays);
+        let whatBobSaysId1 = LOCAL_BOB;
+        setDialog(whatBobSaysId1, talkID);
         break;
 
       case 2: //ID2の文字列が既に格納されたグローバル変数`whatBobSays`を使用する
+        setDialog(this.whatBobSays, talkID);
         break;
 
       case 3: //関数`bob()`の中で関数`whatBobSays`を作成し、その中で宣言したものを利用する
-        //-->新たに関数を作り、その中でローカル変数を宣言し、関数スコープする
-        console.log(getBobSaysId3());
+        //ID3用関数
+        let getBobSaysId3 = function () {
+          const whatBobSays = LOCAL_NEST_FUNCTION;
+          return whatBobSays;
+        };
+        getBobSaysId3();
+        setDialog(getBobSaysId3(), talkID);
         break;
 
       case 4: //関数`bob()`内のfor文のブロックスコープにある、ID4の文字列が格納された変数`whatBobSays`から取得する
-        // -->新たにブロックを作り、for文のすぐ下で宣言されているローカル定数を持ってくる
-        {
-          const whatBobSays = LOCAL_FOR;
-          console.log(whatBobSays);
-        }
-
+        setDialog(whatBobSays, talkID);
         break;
 
       default:
         //オブジェクトを作成し、ID5の文字列を返すオブジェクトメソッド`whatBobSays`を使用する
-        // -->新たにオブジェクトのメソッドを作り、その中でローカル変数を宣言する
         const getBobSaysId5 = {
           func: function () {
             this.whatBobSays = LOCAL_OBJ;
             return this.whatBobSays;
           },
         };
-        console.log(getBobSaysId5.func());
+        getBobSaysId5.func();
+        setDialog(getBobSaysId5.func(), talkID);
         break;
     }
   }
@@ -86,4 +84,3 @@ function setDialog(whatHeSays, talkID) {
     talkID++;
   }
 }
-// setDialog(whatBobSays, talkID);
