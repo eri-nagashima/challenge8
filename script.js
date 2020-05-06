@@ -7,7 +7,7 @@ const LOCAL_FOR = 'ここはfor文のブロックスコープにあるローカ�
 const LOCAL_OBJ = 'オブジェクトで設定したオブジェクトメソッドで連絡中!!'; //ID 5
 
 //吹き出しの番号を指定するID
-// let talkID = 0;
+let talkID = 0;
 
 //グローバル変数(定数)
 // const whatBobSays = GLOBAL;
@@ -16,7 +16,6 @@ var whatBobSays = GLOBAL;
 
 //起動時に呼ばれる
 window.onload = function () {
-  let talkID = 0;
   //起動時に呼び出す関数
   bob();
 };
@@ -24,6 +23,7 @@ window.onload = function () {
 //talkIDに応じてBobの発する言葉を決める関数
 function bob() {
   const whatBobSays = LOCAL_BOB;
+  const whatBobSaysId1 = whatBobSays;
 
   for (let talkID = 0; talkID <= 5; talkID++) {
     const whatBobSays = LOCAL_FOR; //ローカル変数(定数)
@@ -37,7 +37,6 @@ function bob() {
         break;
 
       case 1: //ID1の文字列が既に格納され関数`bob()`のローカル変数`whatBobSays`を使用する
-        let whatBobSaysId1 = LOCAL_BOB;
         setDialog(whatBobSaysId1, talkID);
         break;
 
@@ -47,7 +46,7 @@ function bob() {
 
       case 3: //関数`bob()`の中で関数`whatBobSays`を作成し、その中で宣言したものを利用する
         //ID3用関数
-        let getBobSaysId3 = function () {
+        const getBobSaysId3 = function () {
           const whatBobSays = LOCAL_NEST_FUNCTION;
           return whatBobSays;
         };
